@@ -5,5 +5,6 @@ async function example() {
     await driver.get('http://191.253.103.90/');
     await driver.findElement(By.name('Username')).sendKeys('admin', Key.RETURN)
     await driver.findElement(By.name('Password')).sendKeys('glock9mm', Key.RETURN)
+    await driver.findElement(By.className('menuPlusSymbol')).click()
     }
 example()
