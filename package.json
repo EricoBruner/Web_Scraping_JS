@@ -1,0 +1,10 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/EricoBruner/Web_Scraping_JS.git",
+  "license": "MIT",
+  "dependencies": {
+    "selenium": "^2.20.0"
+  }
+}
