@@ -1,3 +1,5 @@
+require('dotenv').config
+
 const {Builder, By, Key, until} = require('selenium-webdriver');
 
 IP = "191.253.103.90"
@@ -8,14 +10,11 @@ async function example() {
 
     await driver.get(`http://${IP}/`)
 
-    await driver.findElement(By.name('Username')).sendKeys('')
-    await driver.findElement(By.name('Password')).sendKeys('')
+    await driver.findElement(By.name('Username')).sendKeys(process.env.USER)
+    await driver.findElement(By.name('Password')).sendKeys(process.env.PASS)
 
     await driver.findElement(By.id('LoginId')).click()
 
     await driver.get(`http://${IP}/`+PON)
-    
-
     }
-
 example()
