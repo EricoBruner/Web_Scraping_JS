@@ -1,4 +1,4 @@
-require('dotenv').config
+require('dotenv').config()
 
 const {Builder, By, Key, until} = require('selenium-webdriver');
 
@@ -16,5 +16,6 @@ async function example() {
     await driver.findElement(By.id('LoginId')).click()
 
     await driver.get(`http://${IP}/`+PON)
+
     }
 example()
