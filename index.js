@@ -4,10 +4,11 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 
 IP = "191.253.103.90"
 PON = "getpage.gch?pid=1002&nextpage=pon_status_link_info_t.gch"
+WLAN = "getpage.gch?pid=1002&nextpage=net_wlanm_conf1_t.gch"
 
 async function example() {
-    let driver = await new Builder(headless = false).forBrowser('chrome').build();
-    driver.manage().window().minimize();
+    let driver = await new Builder(headless = false).forBrowser(process.env.BROWSER).build();
+    driver.manage().window().maximize();
 
     await driver.get(`http://${IP}/`)
 
@@ -15,6 +16,8 @@ async function example() {
     await driver.findElement(By.name('Password')).sendKeys(process.env.PASS)
 
     await driver.findElement(By.id('LoginId')).click()
+
+    //====== PON ==============================================================
 
     await driver.get(`http://${IP}/`+PON)
     pon_status = await driver.findElement(By.id("Fnt_RxPower")).getText()
@@ -28,5 +31,11 @@ async function example() {
         console.log("Sinal fora do PDQ "+pon_status)
         console.log("=========================")
     }
+
+     //====== WLAN ==============================================================
+
+    await driver.get(`http://${IP}/`+WLAN)
+
+    driver.findElement(By.id('Frm_RFMODE')).sendKeys('1'.ENTER)
 }
 example()
