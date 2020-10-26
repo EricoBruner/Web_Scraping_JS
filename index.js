@@ -2,13 +2,13 @@ require('dotenv').config()
 
 const {Builder, By, Key, until} = require('selenium-webdriver');
 
-IP = "191.253.103.90"
+IP = "100.68.43.235"
 PON = "getpage.gch?pid=1002&nextpage=pon_status_link_info_t.gch"
 WLAN = "getpage.gch?pid=1002&nextpage=net_wlanm_conf1_t.gch"
 
 async function example() {
     let driver = await new Builder(headless = false).forBrowser(process.env.BROWSER).build();
-    driver.manage().window().maximize();
+    driver.manage().window().minimize();
 
     await driver.get(`http://${IP}/`)
 
@@ -34,8 +34,8 @@ async function example() {
 
      //====== WLAN ==============================================================
 
-    await driver.get(`http://${IP}/`+WLAN)
+    //await driver.get(`http://${IP}/`+WLAN)
 
-    driver.findElement(By.id('Frm_RFMODE')).sendKeys('1'.ENTER)
+    //driver.findElement(By.id('Frm_RFMODE')).sendKeys('1'.ENTER)
 }
 example()
