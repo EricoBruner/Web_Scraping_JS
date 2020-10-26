@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const {Builder, By, Key, until} = require('selenium-webdriver');
 
-IP = "100.68.43.235"
+IP = process.env.IP
 PON = "getpage.gch?pid=1002&nextpage=pon_status_link_info_t.gch"
 WLAN = "getpage.gch?pid=1002&nextpage=net_wlanm_conf1_t.gch"
 
