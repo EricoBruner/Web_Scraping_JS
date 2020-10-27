@@ -8,7 +8,7 @@ WLAN = "getpage.gch?pid=1002&nextpage=net_wlanm_conf1_t.gch"
 
 async function example() {
     let driver = await new Builder(headless = false).forBrowser(process.env.BROWSER).build();
-    driver.manage().window().minimize();
+    driver.manage().window().maximize();
 
     await driver.get(`http://${IP}/`)
 
@@ -34,8 +34,15 @@ async function example() {
 
      //====== WLAN ==============================================================
 
-    //await driver.get(`http://${IP}/`+WLAN)
+    await driver.get(`http://${IP}/`+WLAN)
 
-    //driver.findElement(By.id('Frm_RFMODE')).sendKeys('1'.ENTER)
+    const code_get_canal = `var canal = document.getElementById("Frm_Channel");`
+    const code_set_canal = `canal.selectedIndex = 1;`
+
+    await driver.executeScript(code_get_canal)
+    await driver.executeScript(code_set_canal)
+
+    await driver.findElement(By.id('Btn_Submit')).click()
 }
+
 example()
