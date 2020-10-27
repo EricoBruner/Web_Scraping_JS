@@ -36,11 +36,11 @@ async function example() {
 
     await driver.get(`http://${IP}/`+WLAN)
 
-    const code_get_canal = `var canal = document.getElementById("Frm_Channel");`
-    const code_set_canal = `canal.selectedIndex = 1;`
+    const canal = 1
+
+    const code_get_canal = `var canal = document.getElementById("Frm_Channel"); canal.selectedIndex = ${canal}`
 
     await driver.executeScript(code_get_canal)
-    await driver.executeScript(code_set_canal)
 
     await driver.findElement(By.id('Btn_Submit')).click()
 }
