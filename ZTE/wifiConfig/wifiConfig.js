@@ -1,4 +1,4 @@
-module.exports = (canal, largura) => {
+module.exports = (canal) => {
   if(canal == 1) {
     const fixaCanal = 11
   }
