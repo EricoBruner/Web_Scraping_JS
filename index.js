@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const {Builder, By, Key, until} = require('selenium-webdriver');
+const wifiConfig = require('./ZTE/wifiConfig/wifiConfig');
 
 IP = process.env.IP
 PON = "getpage.gch?pid=1002&nextpage=pon_status_link_info_t.gch"
@@ -36,13 +37,18 @@ async function example() {
 
     await driver.get(`http://${IP}/`+WLAN)
 
-    const canal = 1
+    const canalstatus = await driver.executeScript('return document.getElementById("Frm_Channel").selectedIndex')
+    
+    console.log("canal atual: "+canalstatus)
 
-    const code_get_canal = `var canal = document.getElementById("Frm_Channel"); canal.selectedIndex = ${canal}`
-
-    await driver.executeScript(code_get_canal)
+    await driver.executeScript('document.getElementById("Frm_Channel").selectedIndex = 1')
 
     await driver.findElement(By.id('Btn_Submit')).click()
+
+    const canalstatus = await driver.executeScript('return document.getElementById("Frm_Channel").selectedIndex')
+    
+    console.log("canal alterado para: "+canalstatus)
+
 }
 
 example()
