@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const {Builder, By, Key, until} = require('selenium-webdriver');
-const wifiConfig = require('./ZTE/wifiConfig/wifiConfig');
+//const wifiConfig = require('./ZTE/wifiConfig/wifiConfig');
 
 IP = process.env.IP
 PON = "getpage.gch?pid=1002&nextpage=pon_status_link_info_t.gch"
@@ -41,13 +41,15 @@ async function example() {
     
     console.log("canal atual: "+canalstatus)
 
-    await driver.executeScript('document.getElementById("Frm_Channel").selectedIndex = 1')
+    const set_canal = 'document.getElementById("Frm_Channel").selectedIndex = 6'
+
+    await driver.executeScript(set_canal)
 
     await driver.findElement(By.id('Btn_Submit')).click()
 
-    const canalstatus = await driver.executeScript('return document.getElementById("Frm_Channel").selectedIndex')
+    const canalstatusnew = await driver.executeScript('return document.getElementById("Frm_Channel").selectedIndex')
     
-    console.log("canal alterado para: "+canalstatus)
+    console.log("canal alterado para: "+canalstatusnew)
 
 }
 
