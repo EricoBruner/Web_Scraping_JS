@@ -1,5 +1,24 @@
 require('dotenv').config()
 
+function verif_canal(canal) {
+    if(canal == 1){
+        const newcanal = 6
+        return newcanal
+    }
+    if(canal == 6){
+        const newcanal = 11
+        return newcanal
+    }
+    if(canal == 11){
+        const newcanal = 1
+        return newcanal
+    }
+    if(canal != 1 & canal != 6 & canal != 11){
+        const newcanal = 1
+        return newcanal
+    }
+}
+
 const {Builder, By, Key, until} = require('selenium-webdriver');
 //const wifiConfig = require('./ZTE/wifiConfig/wifiConfig');
 
@@ -41,7 +60,9 @@ async function example() {
     
     console.log("canal atual: "+canalstatus)
 
-    const set_canal = 'document.getElementById("Frm_Channel").selectedIndex = 6'
+    newcanal = verif_canal(canalstatus)
+
+    const set_canal = `document.getElementById("Frm_Channel").selectedIndex = ${newcanal}`
 
     await driver.executeScript(set_canal)
 
