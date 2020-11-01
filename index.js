@@ -1,5 +1,15 @@
 require('dotenv').config()
 
+function verif_pon(pon) {
+    if (pon > -28) {
+        const r_pon = `Sinal dentro do PDQ ${pon}. `
+        return r_pon
+    }else{
+        const r_pon = `Sinal fora do PDQ ${pon}. `
+        return r_pon
+    }
+}
+
 function verif_canal(canal) {
     if(canal == 1){
         const newcanal = 6
@@ -25,6 +35,7 @@ const {Builder, By, Key, until} = require('selenium-webdriver');
 IP = process.env.IP
 PON = "getpage.gch?pid=1002&nextpage=pon_status_link_info_t.gch"
 WLAN = "getpage.gch?pid=1002&nextpage=net_wlanm_conf1_t.gch"
+LAN = "getpage.gch?pid=1002&nextpage=net_dhcp_dynamic_t.gch"
 
 async function example() {
     let driver = await new Builder(headless = false).forBrowser(process.env.BROWSER).build();
@@ -41,37 +52,42 @@ async function example() {
 
     await driver.get(`http://${IP}/`+PON)
     pon_status = await driver.findElement(By.id("Fnt_RxPower")).getText()
-
-    if (pon_status > -28) {
-        console.log("=========================")
-        console.log("Sinal dentro do PDQ "+pon_status)
-        console.log("=========================")
-    }else{
-        console.log("=========================")
-        console.log("Sinal fora do PDQ "+pon_status)
-        console.log("=========================")
-    }
+    const m_pon = "Acessado ZTE. "+verif_pon(pon_status)
 
      //====== WLAN ==============================================================
 
     await driver.get(`http://${IP}/`+WLAN)
 
     const canalstatus = await driver.executeScript('return document.getElementById("Frm_Channel").selectedIndex')
+
+    const newcanal = verif_canal(canalstatus)
+
+    await driver.executeScript(`document.getElementById("Frm_Channel").selectedIndex = ${newcanal}`)
+
+    await driver.findElement(By.id('Btn_Submit')).click()
     
-    console.log("canal atual: "+canalstatus)
+    const m_canal = `Alterado canal de ${canalstatus} para ${newcanal}. `
 
-    newcanal = verif_canal(canalstatus)
+    //====== LAN ==============================================================
 
-    const set_canal = `document.getElementById("Frm_Channel").selectedIndex = ${newcanal}`
+    await driver.get(`http://${IP}/`+LAN) 
 
-    await driver.executeScript(set_canal)
+    await driver.findElement(By.name('Frm_DNSServer1')).clear()
+    await driver.findElement(By.name('Frm_DNSServer1')).sendKeys('8.8.8.8')
+
+    await driver.findElement(By.name('Frm_DNSServer2')).clear()
+    await driver.findElement(By.name('Frm_DNSServer2')).sendKeys('189.45.192.3')
+
+    await driver.findElement(By.name('Frm_DNSServer3')).clear()
+    await driver.findElement(By.name('Frm_DNSServer3')).sendKeys('177.200.200.20')
+
+    const m_dns = "Fixado DNS. "
 
     await driver.findElement(By.id('Btn_Submit')).click()
 
-    const canalstatusnew = await driver.executeScript('return document.getElementById("Frm_Channel").selectedIndex')
-    
-    console.log("canal alterado para: "+canalstatusnew)
-
+    console.log("================================================================================")
+    console.log(m_pon+m_canal+m_dns)
+    console.log("================================================================================")
 }
 
 example()
