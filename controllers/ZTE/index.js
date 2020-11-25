@@ -1,6 +1,6 @@
 require('dotenv').config()
-const { json } = require('body-parser')
 const {Builder, By, Key, until} = require('selenium-webdriver')
+const chrome = require('selenium-webdriver/chrome')
 
 function verif_pon(pon) {
     if (pon > -28) {
@@ -37,8 +37,9 @@ LAN = "getpage.gch?pid=1002&nextpage=net_dhcp_dynamic_t.gch"
 
 async function ZTE(IP) 
 {
-    let driver = await new Builder(headless = false).forBrowser("chrome").build();
-    driver.manage().window().maximize();
+    options = new chrome.Options()
+    options.headless(true)
+    let driver = await new Builder().forBrowser("chrome").setChromeOptions(options).build()
 
     await driver.get(`http://${IP}/`)
     await driver.findElement(By.name('Username')).sendKeys(process.env.USER)
@@ -77,6 +78,7 @@ async function ZTE(IP)
         "dns2": "189.45.192.3", 
         "dns3": "177.200.200.20" 
     }
+
 
     return jsonReport
 }

@@ -42,7 +42,7 @@ body{
 }
 
 .ZTE {
-  margin-top: 2.5%;
+  margin-top: 2%;
 }
 
 .report {
@@ -69,13 +69,16 @@ button {
   border: 0px;
   width: 80px;
   height: 23px;
-  border-radius: 0 3px 3px 0 ;
+  border-radius: 3px;
+  margin: 0 22px 0 22px;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.9);
 }
 
 input {
   height: 21px;
-  border-radius: 3px 0 0 3px ;
+  border-radius: 3px;
   border: 0px;  
+  width: 200px;
 }
 
 .report {

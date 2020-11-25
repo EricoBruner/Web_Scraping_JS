@@ -5,18 +5,31 @@ import api from './services/api'
 
 function App() {
 
-  function defaultSetting() {
-    var IPvalue = document.getElementById("IP").value
-    api.post('default-setting', {
-      IP: IPvalue
-    }).then(function (response) {
-      atualizarDados(response.data.date) 
-      console.log(response.data.date.report)
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+    function defaultSetting() {
+      var IPvalue = document.getElementById("IP").value
+      api.post('default-setting', {
+        IP: IPvalue
+      }).then(function (response) {
+        atualizarDados(response.data.date) 
+        console.log(response.data.date.report)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+
+    function viewSetting() {
+      var IPvalue = document.getElementById("IP").value
+      api.post('view-setting', {
+        IP: IPvalue
+      }).then(function (response) {
+        atualizarDados(response.data.date) 
+        console.log(response.data.date.report)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
 
   const [dados, atualizarDados] = useState({})
 
@@ -29,7 +42,10 @@ function App() {
         <div>
         </div>
           <input type="text" id="IP"></input>
-          <button type="submit" onClick={defaultSetting}>Configurar</button>
+          <div>
+            <button type="submit" onClick={defaultSetting}>configurar</button>
+            <button type="submit" onClick={viewSetting}>visualizar</button>
+          </div>
         </div>
       </header>
       <div className="log-title">
@@ -45,8 +61,8 @@ function App() {
             <div className="conteudo" id="equipment">{dados.equipament}</div>
         </div>
         <div className="caixa">
-            <div className="title">Version</div>
-            <div className="conteudo" id="version">{dados.version}</div>
+            <div className="title">PON</div>
+            <div className="conteudo" id="version">{dados.pon}</div>
         </div>
       </div>
       <div className="painel">
